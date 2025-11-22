@@ -1,0 +1,48 @@
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      # Basic configuration
+      - N8N_HOST=0.0.0.0
+      - N8N_PORT=5678
+      
+      # CORS configuration for your Next.js app
+      - N8N_CORS_ORIGIN=http://localhost:3000,https://localhost:3000
+      
+      # Security
+      - N8N_SECURE_COOKIE=false
+      
+      # Database (SQLite by default)
+      - DB_TYPE=sqlite
+      
+      # Timezone
+      - GENERIC_TIMEZONE=Asia/Seoul
+      - TZ=Asia/Seoul
+      
+    volumes:
+      # Persist n8n data
+      - n8n_data:/home/node/.n8n
+
+  # ngrok for HTTPS tunneling
+  ngrok:
+    image: ngrok/ngrok:latest
+    container_name: n8n-ngrok
+    restart: unless-stopped
+    command: 
+      - "http"
+      - "n8n:5678"
+      - "--log=stdout"
+    ports:
+      - "4040:4040"  # ngrok web interface
+    depends_on:
+      - n8n
+    profiles:
+      - ngrok
+
+volumes:
+  n8n_data:
+    driver: local

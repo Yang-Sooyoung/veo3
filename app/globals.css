@@ -1,0 +1,261 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light theme - Discord-inspired */
+    --background: 0 0% 100%;
+    --foreground: 216 8% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 216 8% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 216 8% 12%;
+    --primary: 235 86% 65%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 216 8% 95%;
+    --secondary-foreground: 216 8% 12%;
+    --muted: 216 8% 95%;
+    --muted-foreground: 216 8% 46%;
+    --accent: 235 86% 65%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 216 8% 88%;
+    --input: 216 8% 88%;
+    --ring: 235 86% 65%;
+    --radius: 0.5rem;
+    --chart-1: 235 86% 65%;
+    --chart-2: 139 47% 60%;
+    --chart-3: 43 96% 56%;
+    --chart-4: 0 84% 60%;
+    --chart-5: 291 47% 51%;
+  }
+
+  .dark {
+    /* Dark theme - Discord-inspired colors */
+    --background: 223 7% 15%;
+    --foreground: 210 11% 96%;
+    --card: 220 7% 18%;
+    --card-foreground: 210 11% 96%;
+    --popover: 220 7% 18%;
+    --popover-foreground: 210 11% 96%;
+    --primary: 235 86% 65%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 7% 23%;
+    --secondary-foreground: 210 11% 96%;
+    --muted: 220 7% 23%;
+    --muted-foreground: 217 11% 65%;
+    --accent: 220 7% 23%;
+    --accent-foreground: 210 11% 96%;
+    --destructive: 0 63% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 7% 23%;
+    --input: 220 7% 23%;
+    --ring: 235 86% 65%;
+    --chart-1: 235 86% 65%;
+    --chart-2: 139 47% 60%;
+    --chart-3: 43 96% 56%;
+    --chart-4: 0 84% 60%;
+    --chart-5: 291 47% 51%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  
+  /* Improve touch scrolling on mobile */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Smooth scrolling for better UX */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Prevent text size adjustment on mobile */
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  
+  /* Better font rendering on mobile */
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Enhanced focus indicators for accessibility (WCAG 2.1 AA) */
+  *:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+  }
+
+  /* Skip to main content link for screen readers */
+  .skip-to-main {
+    position: absolute;
+    left: -9999px;
+    z-index: 999;
+    padding: 1rem;
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    text-decoration: none;
+    border-radius: 0.25rem;
+  }
+
+  .skip-to-main:focus {
+    left: 1rem;
+    top: 1rem;
+  }
+
+  /* Screen reader only content */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* Ensure sufficient color contrast for links */
+  a {
+    color: hsl(var(--primary));
+    text-decoration-skip-ink: auto;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  /* Keyboard navigation indicators */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+  }
+}
+
+/* Custom scrollbar styles for better mobile experience */
+@layer utilities {
+  .overscroll-contain {
+    overscroll-behavior: contain;
+  }
+  
+  /* Hide scrollbar on mobile for cleaner look */
+  @media (max-width: 768px) {
+    .overflow-y-auto::-webkit-scrollbar {
+      width: 4px;
+    }
+    
+    .overflow-y-auto::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    .overflow-y-auto::-webkit-scrollbar-thumb {
+      background: hsl(var(--muted-foreground) / 0.3);
+      border-radius: 2px;
+    }
+  }
+  
+  /* Desktop scrollbar */
+  @media (min-width: 769px) {
+    .overflow-y-auto::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .overflow-y-auto::-webkit-scrollbar-track {
+      background: hsl(var(--muted) / 0.3);
+    }
+    
+    .overflow-y-auto::-webkit-scrollbar-thumb {
+      background: hsl(var(--muted-foreground) / 0.5);
+      border-radius: 4px;
+    }
+    
+    .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+      background: hsl(var(--muted-foreground) / 0.7);
+    }
+  }
+  
+  /* Touch-friendly utility */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+  
+  /* Prevent text selection on interactive elements for better mobile UX */
+  .no-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Safe area insets for notched devices */
+  @supports (padding: max(0px)) {
+    .safe-top {
+      padding-top: max(env(safe-area-inset-top), 0px);
+    }
+    
+    .safe-bottom {
+      padding-bottom: max(env(safe-area-inset-bottom), 0px);
+    }
+    
+    .safe-left {
+      padding-left: max(env(safe-area-inset-left), 0px);
+    }
+    
+    .safe-right {
+      padding-right: max(env(safe-area-inset-right), 0px);
+    }
+  }
+  
+  /* Responsive text utilities */
+  .text-responsive-xs {
+    font-size: 0.625rem; /* 10px */
+    line-height: 1rem;
+  }
+  
+  @media (min-width: 640px) {
+    .text-responsive-xs {
+      font-size: 0.75rem; /* 12px */
+      line-height: 1rem;
+    }
+  }
+  
+  .text-responsive-sm {
+    font-size: 0.75rem; /* 12px */
+    line-height: 1rem;
+  }
+  
+  @media (min-width: 640px) {
+    .text-responsive-sm {
+      font-size: 0.875rem; /* 14px */
+      line-height: 1.25rem;
+    }
+  }
+  
+  .text-responsive-base {
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.25rem;
+  }
+  
+  @media (min-width: 640px) {
+    .text-responsive-base {
+      font-size: 1rem; /* 16px */
+      line-height: 1.5rem;
+    }
+  }
+}
